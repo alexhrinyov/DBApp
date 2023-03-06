@@ -3,6 +3,7 @@ using Microsoft.Data.SqlClient;
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Data.Common;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -47,6 +48,21 @@ namespace DBApp
 
             return null;
         }
+
+        public int DeleteByColumn(string table, string column, string value)
+        {
+            var command = new SqlCommand
+            {
+                CommandType = CommandType.Text,
+                CommandText = "delete from " + table + " where " + column + " = '" + value + "';",
+                Connection = connector.GetConnection(),
+            };
+            return command.ExecuteNonQuery();
+
+        }
+        
+
+
 
     }
 }
