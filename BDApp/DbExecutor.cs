@@ -31,6 +31,7 @@ namespace DBApp
 
         }
 
+        // через присоединенную модель
         public SqlDataReader SelectAllCommandReader(string table)
         {
             var command = new SqlCommand
@@ -60,8 +61,31 @@ namespace DBApp
             return command.ExecuteNonQuery();
 
         }
-        
 
+        public int ExecProcedureAdding( string name, string login)
+        {
+            var command = new SqlCommand
+            {
+                CommandType = CommandType.StoredProcedure,
+                CommandText = "AddingUserProc",
+                Connection = connector.GetConnection()
+            };
+            command.Parameters.Add(new SqlParameter("@Name", name));
+            command.Parameters.Add(new SqlParameter("@Login", login));
+            return command.ExecuteNonQuery();
+
+        }
+
+        public int UpdateByLogin(string table, string login, string value)
+        {
+            var command = new SqlCommand
+            {
+                CommandType = CommandType.Text,
+                CommandText = $"update {table} set Name = '{value}' where Login = '{login}'; " ,
+                Connection = connector.GetConnection(),
+            };
+            return command.ExecuteNonQuery();
+        }
 
 
     }

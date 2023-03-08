@@ -87,5 +87,19 @@ namespace DBConsoleApp
             
             return dbExecutor.DeleteByColumn(userTable.Name, userTable.ImportantField, value);
         }
+
+        public int InsertUser()
+        {
+            Console.WriteLine("Введите логин для добавления:");
+            var login = Console.ReadLine();
+            Console.WriteLine("Введите имя для добавления:");
+            var name = Console.ReadLine();
+            return dbExecutor.ExecProcedureAdding(name, login);
+        }
+
+        public int UpdateUserName(string name, string table, string login)
+        {
+            return dbExecutor.UpdateByLogin(table, login, name);
+        }
     }
 }
